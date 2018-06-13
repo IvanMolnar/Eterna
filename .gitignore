@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+/x64
+/.vs
+/Debug
+/Examples/x64
+/Examples/Debug
+/Examples/Lua
