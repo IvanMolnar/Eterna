@@ -86,7 +86,7 @@ public:
 
 		return result;
 	}
-
+	/*
 	template<typename T>
 	T* registerAndInstantiateClass()
 	{
@@ -98,10 +98,15 @@ public:
 		luaL_setfuncs(_luaState, (*s)->getRegisterTable(), 0);
 
 		return *s;
-	}
-	
-private:
-	lua_State* _luaState;
+	}*/
 
+
+	
+
+
+	
+
+	lua_State* _luaState;
+private:
 	void init();
 };
