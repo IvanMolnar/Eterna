@@ -1,23 +1,14 @@
 
-function strTest(s)
-    return s .. " from lua script"
-end
-
-function CreateCInstance()
-    local Instance = {
-        CData = CreateInstanceOfT();
-        SomeFunc = CallSomeFuncOnT;
-    }
-    return Instance;
-end
 
 function testInstance()
     print(1)
-    instance = CreateCInstance()
+    local foo = LuaObjectTest.get()
     print(2)
-    local i = instance:SomeFunc(4)
+    print(foo)
     print(3)
-    print(i)
-    local x = instance:SomeFunc(11)
+    local x = foo:add(11, 19)
     print(x)
+    print(4)
+    local y = foo:sub(25.0)
+    print(y)
 end

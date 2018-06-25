@@ -8,6 +8,8 @@
 #include <string>
 #include <any>
 
+#include <vector>
+
 namespace EternaModuleInfo
 {
 	static const char* DllName = "Eterna.dll";
@@ -86,25 +88,8 @@ public:
 
 		return result;
 	}
-	/*
-	template<typename T>
-	T* registerAndInstantiateClass()
-	{
-		T **s = (T **)lua_newuserdata(_luaState, sizeof(T *));
-
-		*s = new T();
-
-		luaL_newlibtable(_luaState, (*s)->getRegisterTable());
-		luaL_setfuncs(_luaState, (*s)->getRegisterTable(), 0);
-
-		return *s;
-	}*/
-
-
 	
-
-
-	
+	std::vector<void*> _instances;
 
 	lua_State* _luaState;
 private:
