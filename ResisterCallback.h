@@ -91,10 +91,10 @@ int regDummy(lua_State* L)
 		lua_pushinteger(L, ref.template getFunctionResult<int>(index));
 		break;
 	case LuaFunctionInterface::returnType::eFloat:
-		lua_pushinteger(L, ref.template getFunctionResult<float>(index));
+		lua_pushnumber(L, ref.template getFunctionResult<float>(index));
 		break;
 	case LuaFunctionInterface::returnType::eDouble:
-		lua_pushinteger(L, ref.template getFunctionResult<double>(index));
+		lua_pushnumber(L, ref.template getFunctionResult<double>(index));
 		break;
 	case LuaFunctionInterface::returnType::eBool:
 		lua_pushboolean(L, ref.template getFunctionResult<bool>(index));

@@ -9,6 +9,6 @@ function testInstance()
     local x = foo:add(11, 19)
     print(x)
     print(4)
-    local y = foo:sub(25.0)
+    local y = foo:sub(25.0, 20)
     print(y)
 end
