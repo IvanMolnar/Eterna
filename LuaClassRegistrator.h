@@ -1,9 +1,6 @@
 #pragma once
 
-#include "ResisterCallback.h"
-
-
-
+#include "RegisterCallback.h"
 
 class LuaClassRegistrator
 {

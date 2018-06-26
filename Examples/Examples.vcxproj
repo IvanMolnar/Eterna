@@ -183,7 +183,6 @@ copy $(ProjectDir)..\Lua\Lua53.lib $(ProjectDir)\Lua</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\ResisterCallback.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>

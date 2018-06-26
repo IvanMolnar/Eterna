@@ -35,36 +35,37 @@ bool ScriptEngine::runFunction(LuaFunction* function)
 
 	for (auto& arg : function->_args)
 	{
-		std::string typeName = arg.type().name();
-
-		if (typeName.compare(0, 3, "int") == 0)
+		if (arg.type() == typeid(int))
 		{
 			lua_pushinteger(_luaState, std::any_cast<int>(arg));
 		}
-		else if (typeName.compare(0, 12, "char const *") == 0)
+		else if (arg.type() == typeid(const char *))
 		{
 			lua_pushstring(_luaState, std::any_cast<const char *>(arg));
 		}
-		else if (typeName.compare(0, 23, "class std::basic_string") == 0)
+		else if (arg.type() == typeid(std::string))
 		{
 			lua_pushstring(_luaState, std::any_cast<std::string>(arg).c_str());
 		}
-		else if (typeName.compare(0, 4, "bool") == 0)
+		else if (arg.type() == typeid(bool))
 		{
 			lua_pushboolean(_luaState, std::any_cast<bool>(arg));
 		}
-		else if (typeName.compare(0, 6, "double") == 0)
+		else if (arg.type() == typeid(double))
 		{
 			lua_pushnumber(_luaState, std::any_cast<double>(arg));
 		}
-		else if (typeName.compare(0, 5,"float") == 0)
+		else if (arg.type() == typeid(float))
 		{
 			lua_pushnumber(_luaState, std::any_cast<float>(arg));
 		}
 		else
 		{
 			// unsupported arg
-			throw std::invalid_argument("unsupported argument type: " + typeName + " file: " + function->_filePath + " function " + function->_functionName);
+
+			std::string argName(arg.type().name());
+
+			throw std::invalid_argument("unsupported argument type: " + argName + " file: " + function->_filePath + " function " + function->_functionName);
 		}
 	}
 
