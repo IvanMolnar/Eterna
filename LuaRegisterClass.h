@@ -56,9 +56,9 @@ public:
 	{
 		if (_classRegistrator)
 		{
-			_classRegistrator->_luaClass->registerFunctions();
+			std::string tableName = _classRegistrator->_luaClass->registerFunctions();
 
-			_tableNames.push_back("luaL_" + _classRegistrator->_className);
+			_tableNames.push_back(tableName);
 			_luaClasses.push_back(std::move(_classRegistrator->_luaClass));
 
 			delete _classRegistrator;

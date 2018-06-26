@@ -212,7 +212,7 @@ public:
 		if (paramsReset == false && _params[index].type() != param.type())
 		{
 			std::ostringstream ss;
-			ss << "unsuported arg on index " << index << " Arg type expected: " << _params[index].type().name() << " but received: " << param.type().name();
+			ss << "unsuported argument on index " << index << " Argument type expected: " << _params[index].type().name() << " but received: " << param.type().name();
 
 			throw std::invalid_argument(ss.str());
 		}
@@ -284,7 +284,7 @@ public:
 		return _functionMap[functionIndex]->_returnType;
 	}
 
-	void registerFunctions()
+	std::string registerFunctions()
 	{
 		unsigned int index = 1;
 		for (auto& it : _functionMap)
@@ -310,6 +310,8 @@ public:
 		lua_setfield(L, -1, "__index");
 
 		lua_setglobal(L, _className.c_str());
+
+		return tableName;
 	}
 
 	unsigned int _functionIndex;
