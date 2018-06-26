@@ -16,7 +16,7 @@ public:
 	~LuaClassRegistrator() {};
 
 	template<typename C, typename R, typename ...Args>
-	void registerLuaFunctions(const std::string& functionName, C* instance, R(C::*f)(Args... args), Args... defaultValues)
+	void registerLuaFunction(const std::string& functionName, C* instance, R(C::*f)(Args... args), Args... defaultValues)
 	{
 		auto rawFunc = new LuaFunctionT<C, R, Args...>(f, instance, functionName, defaultValues...);
 		std::unique_ptr<LuaFunctionInterface> uniquePtr(rawFunc);

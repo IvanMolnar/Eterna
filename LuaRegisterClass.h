@@ -30,13 +30,11 @@ public:
 		luaCallback[4] = getClassInstance<LuaRegisterClass, 4>;
 	}
 
-
-	static LuaRegisterClass* getInstance()
+	static std::shared_ptr<LuaRegisterClass> getInstance()
 	{
-		static auto instance = std::make_unique<LuaRegisterClass>(LuaRegisterClass());
-		return instance.get();
+		static auto instance = std::make_shared<LuaRegisterClass>(LuaRegisterClass());
+		return instance;
 	}
-
 
 	LuaClassRegistrator* createClass(const std::string& className)
 	{

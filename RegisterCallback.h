@@ -10,6 +10,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <sstream>
 
 template <class ...Args>
 struct ArgsHelper
@@ -176,10 +177,15 @@ public:
 
 	void setParam(unsigned int index, std::any param) override
 	{
+
+		bool paramsReset = false;
+
 		// workaround for std::int64_t
 		// all int values passed from lua are std::int64_t
 		if (_params[index].type() == typeid(int) && param.type() == typeid(std::int64_t))
 		{
+			paramsReset = true;
+
 			_params[index].reset();
 			std::int64_t r = std::any_cast<std::int64_t>(param);
 			param = static_cast<int>(r);
@@ -187,6 +193,8 @@ public:
 		// workaround conversion from double to float, etc...
 		else if (_params[index].type() == typeid(float))
 		{
+			paramsReset = true;
+
 			_params[index].reset();
 
 			if (param.type() == typeid(double))
@@ -199,6 +207,14 @@ public:
 				std::int64_t r = std::any_cast<std::int64_t>(param);
 				param = static_cast<float>(r);
 			}
+		}
+
+		if (paramsReset == false && _params[index].type() != param.type())
+		{
+			std::ostringstream ss;
+			ss << "unsuported arg on index " << index << " Arg type expected: " << _params[index].type().name() << " but received: " << param.type().name();
+
+			throw std::invalid_argument(ss.str());
 		}
 
 		_params[index] = param;
