@@ -69,8 +69,7 @@ bool ScriptEngine::runFunction(LuaFunction* function)
 		}
 	}
 
-	//if (lua_pcall(_luaState, function->_args.size(), 1, 0) != 0)
-	if (lua_pcallk(_luaState, function->_args.size(), 1, 0, 0, NULL) != 0)
+	if (lua_pcall(_luaState, static_cast<int>(function->_args.size()), 1, 0) != 0)
 	{
 		// error calling function
 		std::string errorMessage = lua_tostring(_luaState, -1);

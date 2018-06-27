@@ -48,7 +48,8 @@ public:
 	template<>
 	int getResult()
 	{
-		int result = std::any_cast<int>(lua_tointeger(_luaState, -1));
+		// lua always returns std::int64_t ( long long )
+		int result = static_cast<int>(std::any_cast<std::int64_t>(lua_tointeger(_luaState, -1)));
 		lua_pop(_luaState, 1);
 
 		return result;
