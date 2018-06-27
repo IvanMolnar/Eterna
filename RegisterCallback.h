@@ -238,22 +238,29 @@ public:
 
 class LuaClass
 {
+
+private:
+
+	template <unsigned int index>
+	void registerHelper()
+	{
+		sFooRegs[index].func = regDummy<LuaClass, index>;
+	}
+
+	template <unsigned int... index>
+	void generateCallbackFunctions(std::index_sequence<index...>)
+	{
+		int dummy[] = { 0, ((void)(registerHelper<index>()), 0)... };
+	}
+
 public:
 
 	LuaClass(std::string className, lua_CFunction function) : _functionIndex(1), _className(className)
 	{
+		generateCallbackFunctions(std::make_index_sequence<EternaLimits::maxRegisteredClasses>{});
+
 		sFooRegs[0].func = function;
 		sFooRegs[0].name = "get";
-
-		sFooRegs[1].func = regDummy<LuaClass, 1>;
-		sFooRegs[2].func = regDummy<LuaClass, 2>;
-		sFooRegs[3].func = regDummy<LuaClass, 3>;
-		sFooRegs[4].func = regDummy<LuaClass, 4>;
-		sFooRegs[5].func = regDummy<LuaClass, 5>;
-		sFooRegs[6].func = regDummy<LuaClass, 6>;
-		sFooRegs[7].func = regDummy<LuaClass, 7>;
-		sFooRegs[8].func = regDummy<LuaClass, 8>;
-		sFooRegs[9].func = regDummy<LuaClass, 9>;
 	}
 	
 	void addFunction(std::unique_ptr<LuaFunctionInterface> function)
@@ -317,6 +324,6 @@ public:
 	unsigned int _functionIndex;
 
 	std::map<unsigned int, std::unique_ptr<LuaFunctionInterface>> _functionMap;
-	luaL_Reg sFooRegs[10];
+	luaL_Reg sFooRegs[EternaLimits::maxRegisteredClasses];
 	std::string _className;
 };

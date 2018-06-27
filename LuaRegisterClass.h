@@ -19,15 +19,25 @@ int getClassInstance(lua_State* L)
 class LuaRegisterClass
 {
 
+private:
+	
+	template <unsigned int index>
+	void registerHelper()
+	{
+		luaCallback[index] = getClassInstance<LuaRegisterClass, index>;
+	}
+
+	template <unsigned int... index>
+	void generateCallbackFunctions(std::index_sequence<index...>)
+	{
+		int dummy[] = { 0, ((void)(registerHelper<index>()), 0)... };
+	}
+
 public:
 
 	LuaRegisterClass() : _classRegistrator(nullptr)
 	{
-		luaCallback[0] = getClassInstance<LuaRegisterClass, 0>;
-		luaCallback[1] = getClassInstance<LuaRegisterClass, 1>;
-		luaCallback[2] = getClassInstance<LuaRegisterClass, 2>;
-		luaCallback[3] = getClassInstance<LuaRegisterClass, 3>;
-		luaCallback[4] = getClassInstance<LuaRegisterClass, 4>;
+		generateCallbackFunctions(std::make_index_sequence<EternaLimits::maxRegisteredClasses>{});
 	}
 
 	static std::shared_ptr<LuaRegisterClass> getInstance()
@@ -70,8 +80,7 @@ public:
 	static std::vector<std::string> _tableNames;
 	static std::vector<std::unique_ptr<LuaClass>> _luaClasses;
 
-	// 5 for testing
-	lua_CFunction luaCallback[5];
+	lua_CFunction luaCallback[EternaLimits::maxRegisteredClasses];
 };
 
 std::vector<std::string> LuaRegisterClass::_tableNames;

@@ -4,6 +4,7 @@
 
 #include "Lua\include\lua.hpp"
 #include "LuaFunction.h"
+#include "Config.h"
 
 #include <string>
 #include <any>
