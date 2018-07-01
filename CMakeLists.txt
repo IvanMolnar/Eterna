@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release;" CACHE STRING "" FORCE)
+
 project(Eterna
     LANGUAGES CXX
     VERSION 0.1.1
@@ -53,31 +55,7 @@ ExternalProject_Add(lua_external
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Src/Lua/CMakeLists.txt ${LUA_ROOT}/CMakeLists.txt COPYONLY)
 
-
-link_directories(${LUA_SOURCE})
-
-target_link_libraries(Eterna_lib lua)
-
-#include_directories(AFTER ${LUA_SOURCE})
-
 add_dependencies(Eterna_lib lua_external)
 
-add_executable(Example
-    ${CMAKE_CURRENT_SOURCE_DIR}/Examples/Examples.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Examples/stdafx.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Examples/stdafx.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Examples/targetver.h
-)
-
-target_compile_features(Example PUBLIC cxx_std_17)
-
-#target_link_libraries(Example lua)
-
-#link_directories(${LUA_SOURCE})
-#include_directories(AFTER ${LUA_SOURCE})
-
-#link_directories(${CMAKE_HOME_DIRECTORY}/Lib/Debug)
-#include_directories(${CMAKE_HOME_DIRECTORY}/Lib/Debug)
-
-target_link_libraries(Example Eterna_lib)
+add_subdirectory(Examples)
 add_dependencies(Example Eterna_lib)
