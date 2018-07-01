@@ -7,10 +7,6 @@ project(Eterna
     VERSION 0.1.1
 )
 
-#set(CMAKE_HOME_DIRECTORY ${PROJECT_SOURCE_DIR}/Solution)
-
-#message(STATUS, ${CMAKE_HOME_DIRECTORY})
-
 add_library(Eterna_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/Eterna.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/Config.h
