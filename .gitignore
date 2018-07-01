@@ -36,3 +36,7 @@
 /Examples/x64
 /Examples/Debug
 /Examples/Lua
+/Lib
+/Build
+/Src/Lua/*.h
+/Src/Lua/*.c

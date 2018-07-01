@@ -1,6 +1,11 @@
 #pragma once
-
-#pragma comment(lib, "c:\\Users\\IvanM\\source\\repos\\Eterna\\TestBuild\\Debug\\Eterna_lib.lib")
-#pragma comment(lib, "c:\\Users\\IvanM\\source\\repos\\Eterna\\TestBuild\\lua\\lua\\Debug\\lualib.lib")
+/*
+#ifdef _DEBUG
+#pragma comment(lib, "..\\Lib\\Debug\\Eterna.lib")
+#pragma comment(lib, "..\\Lib\\Debug\\Lua.lib")
+#else
+#pragma comment(lib, "..\\Lib\\Release\\Eterna.lib")
+#pragma comment(lib, "..\\Lib\\Release\\Lua.lib")
+#endif*/
 
 #include "LuaRegisterClass.h"
