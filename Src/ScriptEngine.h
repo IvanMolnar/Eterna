@@ -1,8 +1,11 @@
 #pragma once
 
-#pragma comment(lib, "Lua\\lua53.lib")
+extern "C" {
+#include "..\TestBuild\lua\lua\lua.h"
+#include "..\TestBuild\lua\lua\lualib.h"
+#include "..\TestBuild\lua\lua\lauxlib.h"
+}
 
-#include "Lua\include\lua.hpp"
 #include "LuaFunction.h"
 #include "Config.h"
 
