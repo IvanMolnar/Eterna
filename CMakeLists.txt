@@ -17,7 +17,6 @@ add_library(Eterna_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/RegisterCallback.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/ScriptEngine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/ScriptEngine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Src/ScriptEngineInterface.h
 )
 
 set_target_properties( Eterna_lib PROPERTIES
