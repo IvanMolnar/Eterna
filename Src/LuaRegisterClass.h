@@ -24,7 +24,7 @@ private:
 	template <unsigned int index>
 	void registerHelper()
 	{
-		luaCallback[index] = getClassInstance<LuaRegisterClass, index>;
+		_luaClassCallbacks[index] = getClassInstance<LuaRegisterClass, index>;
 	}
 
 	template <unsigned int... index>
@@ -55,7 +55,7 @@ public:
 
 		std::size_t registeredClassCount = _luaClasses.size();
 
-		auto classCallbackFunction = luaCallback[registeredClassCount];
+		auto classCallbackFunction = _luaClassCallbacks[registeredClassCount];
 
 		_classRegistrator = new LuaClassRegistrator(className, classCallbackFunction);
 
@@ -80,7 +80,7 @@ public:
 	static std::vector<std::string> _tableNames;
 	static std::vector<std::unique_ptr<LuaClass>> _luaClasses;
 
-	lua_CFunction luaCallback[EternaLimits::maxRegisteredClasses];
+	lua_CFunction _luaClassCallbacks[EternaLimits::maxRegisteredClasses];
 };
 
 std::vector<std::string> LuaRegisterClass::_tableNames;

@@ -25,7 +25,7 @@ struct ArgsHelper
 };
 
 template <typename C, int index>
-int regDummy(lua_State* L)
+int luaFunctionCallback(lua_State* L)
 {
 	if (lua_istable(L, 1))
 	{
@@ -244,7 +244,7 @@ private:
 	template <unsigned int index>
 	void registerHelper()
 	{
-		sFooRegs[index].func = regDummy<LuaClass, index>;
+		_luaFunctionCallbacks[index].func = luaFunctionCallback<LuaClass, index>;
 	}
 
 	template <unsigned int... index>
@@ -259,8 +259,8 @@ public:
 	{
 		generateCallbackFunctions(std::make_index_sequence<EternaLimits::maxRegisteredClasses>{});
 
-		sFooRegs[0].func = function;
-		sFooRegs[0].name = "get";
+		_luaFunctionCallbacks[0].func = function;
+		_luaFunctionCallbacks[0].name = "get";
 	}
 	
 	void addFunction(std::unique_ptr<LuaFunctionInterface> function)
@@ -296,12 +296,12 @@ public:
 		unsigned int index = 1;
 		for (auto& it : _functionMap)
 		{
-			sFooRegs[index].name = it.second->getName().c_str();
+			_luaFunctionCallbacks[index].name = it.second->getName().c_str();
 			++index;
 		}
 
-		sFooRegs[index].func = NULL;
-		sFooRegs[index].name = NULL;
+		_luaFunctionCallbacks[index].func = NULL;
+		_luaFunctionCallbacks[index].name = NULL;
 
 		std::string tableName = "luaL_" + _className;
 
@@ -310,7 +310,7 @@ public:
 		luaL_newmetatable(L, tableName.c_str());
 
 		// Register the C functions _into_ the metatable we just created.
-		luaL_setfuncs(L, sFooRegs, 0);
+		luaL_setfuncs(L, _luaFunctionCallbacks, 0);
 
 		lua_pushvalue(L, -1);
 
@@ -324,6 +324,6 @@ public:
 	unsigned int _functionIndex;
 
 	std::map<unsigned int, std::unique_ptr<LuaFunctionInterface>> _functionMap;
-	luaL_Reg sFooRegs[EternaLimits::maxRegisteredClasses];
+	luaL_Reg _luaFunctionCallbacks[EternaLimits::maxRegisteredFunctions];
 	std::string _className;
 };

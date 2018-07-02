@@ -16,8 +16,7 @@ extern "C" {
 
 namespace EternaModuleInfo
 {
-	static const char* DllName = "Eterna.dll";
-	static const char* GetInstanceFunction = "getInstance";
+	static const char* Version = "0.1.1";
 }
 
 class ScriptEngine
