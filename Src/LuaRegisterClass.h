@@ -66,6 +66,19 @@ public:
 	{
 		if (_classRegistrator)
 		{
+
+			if (_tableNames.size() == EternaLimits::maxRegisteredClasses)
+			{
+				std::ostringstream errorMessage;
+				errorMessage << "Can't register class. Max lenght of " << EternaLimits::maxRegisteredClasses << " reached." << std::endl
+					<< "Change 'EternaLimits::maxRegisteredClasses' or register fewer classes";
+
+				delete _classRegistrator;
+
+				throw std::length_error(errorMessage.str());
+				return;
+			}
+
 			std::string tableName = _classRegistrator->_luaClass->registerFunctions();
 
 			_tableNames.push_back(tableName);

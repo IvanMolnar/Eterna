@@ -2,7 +2,6 @@
 
 #include <any>
 #include <functional>
-#include <type_traits>
 
 #include "ScriptEngine.h"
 
@@ -36,11 +35,10 @@ int luaFunctionCallback(lua_State* L)
 
 	if (!lua_touserdata(L, 1))
 	{
-		lua_error(L); // longjmp out.
+		lua_error(L);
 	}
 
 	C& ref = *(C*)lua_touserdata(L, 1);
-	//lua_pop(L, 1);
 
 	int numArgs = lua_gettop(L) - 2;
 
@@ -211,10 +209,11 @@ public:
 
 		if (paramsReset == false && _params[index].type() != param.type())
 		{
-			std::ostringstream ss;
-			ss << "unsuported argument on index " << index << " Argument type expected: " << _params[index].type().name() << " but received: " << param.type().name();
+			std::ostringstream errorMessage;
+			errorMessage << "unsuported argument on index " << index << " Argument type expected: " << _params[index].type().name() << " but received: " << param.type().name();
 
-			throw std::invalid_argument(ss.str());
+			throw std::invalid_argument(errorMessage.str());
+			return;
 		}
 
 		_params[index] = param;
@@ -257,7 +256,7 @@ public:
 
 	LuaClass(std::string className, lua_CFunction function) : _functionIndex(1), _className(className)
 	{
-		generateCallbackFunctions(std::make_index_sequence<EternaLimits::maxRegisteredClasses>{});
+		generateCallbackFunctions(std::make_index_sequence<EternaLimits::maxRegisteredFunctions>{});
 
 		_luaFunctionCallbacks[0].func = function;
 		_luaFunctionCallbacks[0].name = "get";
@@ -265,7 +264,18 @@ public:
 	
 	void addFunction(std::unique_ptr<LuaFunctionInterface> function)
 	{
+		if (_functionIndex > EternaLimits::maxRegisteredFunctions)
+		{
+			std::ostringstream errorMessage;
+			errorMessage << "Can't register function. Max lenght of " << EternaLimits::maxRegisteredFunctions << " reached." << std::endl
+				<< "Change 'EternaLimits::maxRegisteredFunctions' or register fewer functions";
+
+			throw std::length_error(errorMessage.str());
+			return;
+		}
+
 		_functionMap[_functionIndex] = std::move(function);
+
 		++_functionIndex;
 	}
 
@@ -324,6 +334,9 @@ public:
 	unsigned int _functionIndex;
 
 	std::map<unsigned int, std::unique_ptr<LuaFunctionInterface>> _functionMap;
-	luaL_Reg _luaFunctionCallbacks[EternaLimits::maxRegisteredFunctions];
+
+	// +1 is for NULL entry
+	luaL_Reg _luaFunctionCallbacks[EternaLimits::maxRegisteredFunctions + 1];
+
 	std::string _className;
 };

@@ -66,6 +66,7 @@ bool ScriptEngine::runFunction(LuaFunction* function)
 			std::string argName(arg.type().name());
 
 			throw std::invalid_argument("unsupported argument type: " + argName + " file: " + function->_filePath + " function " + function->_functionName);
+			return false;
 		}
 	}
 
