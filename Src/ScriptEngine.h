@@ -16,7 +16,7 @@ extern "C" {
 
 namespace EternaModuleInfo
 {
-	static const char* Version = "0.1.1";
+	static const char* Version = "0.1.2";
 }
 
 class ScriptEngine
