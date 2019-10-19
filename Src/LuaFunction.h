@@ -2,6 +2,7 @@
 
 #include <list>
 #include <any>
+#include <string>
 
 class LuaFunction
 {

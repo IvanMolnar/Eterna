@@ -136,7 +136,7 @@ public:
 
 	LuaFunctionT(R(C::*f)(Args... args), C* p,  std::string name, Args... args) : _orgFunction(f), _name(name)
 	{
-		if (std::is_same<R, int>::value || std::is_same<R, std::int64_t>::value)
+      if (std::is_same<R, int>::value || std::is_same<R, std::int64_t>::value)
 		{
 			_returnType = returnType::eInt;
 		}

@@ -3,6 +3,7 @@
 #include "ScriptEngine.h"
 
 #include <string>
+#include <stdexcept>
 
 ScriptEngine::ScriptEngine()
 {

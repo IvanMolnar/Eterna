@@ -37,7 +37,7 @@ include(ExternalProject)
 ExternalProject_Add(lua_external
                     PREFIX ${LUA_ROOT}
                     GIT_REPOSITORY "https://github.com/lua/lua.git"
-                    GIT_TAG "v5-3-4"
+                    GIT_TAG "v5.3.4"
                     UPDATE_COMMAND ""
                     PATCH_COMMAND ""
                     INSTALL_COMMAND ""
