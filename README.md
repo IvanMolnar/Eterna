@@ -1,5 +1,6 @@
 # Eterna
-Eterna is static Lua wrapper library written using C++17 standard
+Eterna is static Lua wrapper library written using C++17 standard.
+Does not support full fuctionality yet.
 
 Required:
 
